@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cipactli - Custom Software Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-orange: #f97316;
+            --accent-white: #ffffff;
+            --dark-blue: #1e40af;
+            --light-orange: #fed7aa;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Sticky Background with Logo */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #2773e6 100%);
+            z-index: -2;
+        }
+
+        .background-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .background-logo video {
+            width: 2000px;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-20px); }
+        }
+
+        /* Sticky Title */
+        .sticky-title {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 30px;
+            border-radius: 50px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sticky-title h1 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+        }
+
+        .sticky-title.scrolled {
+            transform: translateX(-50%) scale(0.9);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            background: rgba(37, 99, 235, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-item a {
+            color: var(--accent-white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--secondary-orange);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-item a:hover::before {
+            left: 0;
+        }
+
+        .nav-item a:hover {
+            color: var(--accent-white);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .content {
+            position: relative;
+            z-index: 1;
+            background: var(--accent-white);
+            margin-top: 100vh;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            padding: 80px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary-orange), var(--primary-blue));
+            transition: width 0.8s ease;
+        }
+
+        .section.visible h2::after {
+            width: 100%;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        /* Service Cards */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, var(--accent-white) 0%, #f8fafc 100%);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(249, 115, 22, 0.05));
+            transition: left 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            left: 0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(37, 99, 235, 0.2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-orange));
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-white);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .service-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .tech-badge {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--accent-white);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .tech-badge:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, var(--secondary-orange), #ea580c);
+        }
+
+        /* Contact Section */
+        .contact-form {
+            background: linear-gradient(135deg, #f8fafc 0%, var(--accent-white) 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(37, 99, 235, 0.1);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--accent-white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--secondary-orange), #ea580c);
+            color: var(--accent-white);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .navbar {
+                left: 20px;
+                right: 20px;
+                transform: none;
+                width: calc(100% - 40px);
+            }
+
+            .nav-menu {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .sticky-title h1 {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent-white);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            z-index: 100;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-indicator.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <div class="background-logo">
+            <video autoplay loop muted playsinline>
+                <source src="cp_swim.webm" type="video/webm">
+            </video>
+        </div>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator">↓</div>
+
+    <div class="sticky-title" id="stickyTitle">
+        <h1>Cipactli</h1>
+    </div>
+
+    <nav class="navbar">
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="#about" data-scroll="about">About</a></li>
+            <li class="nav-item"><a href="#services" data-scroll="services">What We Do</a></li>
+            <li class="nav-item"><a href="#goals" data-scroll="goals">Our Goals</a></li>
+            <li class="nav-item"><a href="#contact" data-scroll="contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        <section id="about" class="section">
+            <h2>About Our Business</h2>
+            <p>[Insert your company description here. Explain your background, experience, and what makes your software solutions unique. Mention your expertise in creating custom internal software solutions.]</p>
+            <p>[Add more details about your team, company history, and approach to software development. Highlight your commitment to quality and customer satisfaction.]</p>
+            
+            <div class="tech-stack">
+                <span class="tech-badge">HTML5</span>
+                <span class="tech-badge">CSS3</span>
+                <span class="tech-badge">JavaScript</span>
+                <span class="tech-badge">PHP</span>
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Database Management</span>
+                <span class="tech-badge">Server Setup</span>
+            </div>
+        </section>
+
+        <section id="services" class="section">
+            <h2>What We Do</h2>
+            <p>[Brief overview of your services and approach to creating custom software solutions.]</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🖥️</div>
+                    <h3>Server Setup & Configuration</h3>
+                    <p>[Describe your server setup services, including infrastructure planning, security implementation, and performance optimization.]</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🗄️</div>
+                    <h3>Database Solutions</h3>
+                    <p>[Detail your database services including design, implementation, optimization, and maintenance of database systems.]</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Custom Software Development</h3>
+                    <p>[Explain your custom software development process, from requirements gathering to deployment and maintenance.]</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>File Serving & Scripting</h3>
+                    <p>[Describe your expertise in setting up file serving capabilities and creating custom scripts for automation.]</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3>Web Applications</h3>
+                    <p>[Detail your web application development services using HTML5, CSS, JavaScript, PHP, and Python.]</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3>Security & Maintenance</h3>
+                    <p>[Explain your approach to security implementation, regular maintenance, and ongoing support services.]</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="goals" class="section">
+            <h2>What We Hope to Accomplish</h2>
+            <p>[Share your vision and mission. Describe the impact you want to make in the software development industry and how you plan to help businesses improve their internal processes through custom software solutions.]</p>
+            <p>[Include your long-term goals, commitment to innovation, and how you plan to stay ahead of technology trends to benefit your clients.]</p>
+            <p>[Mention any specific industries you're targeting or specialized solutions you're developing for the future.]</p>
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Get In Touch</h2>
+            <p>[Add your contact introduction message here. Encourage potential clients to reach out for consultations or project discussions.]</p>
+            
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="project">Project Details</label>
+                        <textarea id="project" name="project" rows="5" placeholder="Tell us about your project requirements..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+
+            <div style="margin-top: 40px; text-align: center;">
+                <p><strong>Email:</strong> [your-email@domain.com]</p>
+                <p><strong>Phone:</strong> [Your Phone Number]</p>
+                <p><strong>Location:</strong> [Your Location]</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('[data-scroll]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-scroll');
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    const offsetTop = targetSection.offsetTop - 100;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Sticky title animation on scroll
+        const stickyTitle = document.getElementById('stickyTitle');
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                stickyTitle.classList.add('scrolled');
+                scrollIndicator.classList.add('hidden');
+            } else {
+                stickyTitle.classList.remove('scrolled');
+                scrollIndicator.classList.remove('hidden');
+            }
+        });
+
+        // Animate sections on scroll
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Form submission handler
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Add loading state to button
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.style.background = 'linear-gradient(135deg, #6b7280, #4b5563)';
+            
+            // Simulate form submission (replace with actual form handling)
+            setTimeout(() => {
+                submitBtn.textContent = 'Message Sent!';
+                submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = 'linear-gradient(135deg, var(--secondary-orange), #ea580c)';
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Add hover effects to service cards
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Tech badge animations
+        document.querySelectorAll('.tech-badge').forEach((badge, index) => {
+            badge.style.animationDelay = `${index * 0.1}s`;
+            badge.style.animation = 'fadeInUp 0.6s ease forwards';
+        });
+
+        // Add CSS animation for tech badges
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Parallax effect for background logo
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.2;
+            const backgroundLogo = document.querySelector('.background-logo');
+            if (backgroundLogo) {
+                backgroundLogo.style.transform = `translate(-50%, -50%) translateY(${rate}px)`;
+            }
+        });
+
+        // Add active state to navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('[data-scroll]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-scroll') === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
