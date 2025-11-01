@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lizzy Dance & Gymnastics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #000;
+            overflow-x: hidden;
+            background: url('assets/az_bg.png') fixed center/cover;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(255, 138, 101, 0.3) 0%, 
+                rgba(255, 183, 77, 0.3) 25%,
+                rgba(255, 112, 67, 0.3) 50%,
+                rgba(197, 108, 77, 0.3) 75%,
+                rgba(139, 90, 71, 0.3) 100%);
+            z-index: -1;
+        }
+
+        .logo-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 50;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .logo-container.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            background: url('assets/liz1.png') center/contain no-repeat;
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(255, 138, 101, 0.95);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .nav-bar.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .nav-logo {
+            width: 60px;
+            height: 60px;
+            background: url('assets/liz1.png') center/contain no-repeat;
+        }
+
+        .content {
+            margin-top: 0;
+        }
+
+        .card {
+            position: relative;
+            width: 100%;
+            padding: 40px 20px;
+            margin: 30px 0;
+            background: linear-gradient(135deg, #FF8A65 0%, #FFB74D 100%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card:nth-child(even) {
+            transform: skewY(-2deg);
+            background: linear-gradient(135deg, #FF7043 0%, #FFA726 100%);
+        }
+
+        .card:nth-child(odd) {
+            transform: skewY(2deg);
+            background: linear-gradient(135deg, #FFB74D 0%, #FF8A65 100%);
+        }
+
+        .card-content {
+            transform: skewY(0);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card:nth-child(even) .card-content {
+            transform: skewY(2deg);
+        }
+
+        .card:nth-child(odd) .card-content {
+            transform: skewY(-2deg);
+        }
+
+        .card h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #000;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
+        }
+
+        .card p, .card ul {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .instagram-section {
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #8B5A47 0%, #C56C4D 100%);
+            text-align: center;
+        }
+
+        .instagram-section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #000;
+        }
+
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .instagram-post {
+            aspect-ratio: 1;
+            background: #FFB74D;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .instagram-post:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Tablet and up */
+        @media (min-width: 768px) {
+            .logo {
+                width: 250px;
+                height: 250px;
+            }
+
+            .nav-bar {
+                height: 90px;
+                padding: 0 30px;
+            }
+
+            .nav-logo {
+                width: 70px;
+                height: 70px;
+            }
+
+            .card {
+                padding: 60px 40px;
+                margin: 40px 0;
+            }
+
+            .card h2 {
+                font-size: 2.5em;
+                margin-bottom: 25px;
+            }
+
+            .card p, .card ul {
+                font-size: 1.2em;
+                line-height: 1.7;
+            }
+
+            .instagram-section {
+                padding: 60px 40px;
+            }
+
+            .instagram-section h2 {
+                font-size: 2.5em;
+                margin-bottom: 40px;
+            }
+
+            .instagram-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .instagram-post {
+                font-size: 1.1em;
+                border-radius: 12px;
+            }
+        }
+
+        /* Desktop and up */
+        @media (min-width: 1024px) {
+            .logo {
+                width: 300px;
+                height: 300px;
+            }
+
+            .nav-bar {
+                height: 100px;
+            }
+
+            .nav-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .card {
+                padding: 80px 60px;
+                margin: 60px 0;
+            }
+
+            .card h2 {
+                font-size: 3em;
+                margin-bottom: 30px;
+            }
+
+            .card p, .card ul {
+                font-size: 1.3em;
+                line-height: 1.8;
+                margin-bottom: 20px;
+            }
+
+            .instagram-section {
+                padding: 80px 60px;
+            }
+
+            .instagram-section h2 {
+                font-size: 3em;
+                margin-bottom: 50px;
+            }
+
+            .instagram-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 30px;
+            }
+
+            .instagram-post {
+                font-size: 1.2em;
+                border-radius: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container" id="logoContainer">
+        <div class="logo"></div>
+    </div>
+
+    <nav class="nav-bar" id="navBar">
+        <div class="nav-logo"></div>
+    </nav>
+
+    <div class="content" id="content">
+        <div class="card">
+            <div class="card-content">
+                <h2>Basic Info</h2>
+                <ul>
+                    <li><strong>Phone:</strong> (555) 123-4567</li>
+                    <li><strong>Email:</strong> info@lizzydance.com</li>
+                    <li><strong>Location:</strong> 123 Desert Road, Tucson, AZ 85001</li>
+                    <li><strong>Hours:</strong> Mon-Fri 9AM-8PM, Sat 10AM-6PM</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <h2>Lizzy Dance Classes</h2>
+                <p>Experience the joy of movement with our comprehensive dance programs! We offer classes for all ages and skill levels, from tiny dancers to advanced performers.</p>
+                <p>Our dance styles include Ballet, Jazz, Contemporary, Hip Hop, and Tap. Each class is designed to build confidence, coordination, and creativity in a supportive environment.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <h2>Lizzy Gymnastics</h2>
+                <p>Build strength, flexibility, and confidence with our gymnastics program! Our certified coaches provide expert instruction in a safe, fun environment.</p>
+                <p>We offer recreational and competitive gymnastics programs, including floor exercise, vault, bars, and beam. Perfect for developing coordination and discipline.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <h2>Lizzy Fast Track</h2>
+                <p>Our intensive Fast Track program is designed for dedicated students ready to accelerate their skills. This elite training program combines dance and gymnastics fundamentals with advanced techniques.</p>
+                <p>Fast Track students receive personalized coaching, performance opportunities, and preparation for competitions and showcases.</p>
+            </div>
+        </div>
+
+        <div class="instagram-section">
+            <h2>Follow Us on Instagram</h2>
+            <div class="instagram-grid">
+                <a href="https://instagram.com/yourusername" target="_blank" class="instagram-post">
+                    Post 1
+                </a>
+                <a href="https://instagram.com/yourusername" target="_blank" class="instagram-post">
+                    Post 2
+                </a>
+                <a href="https://instagram.com/yourusername" target="_blank" class="instagram-post">
+                    Post 3
+                </a>
+                <a href="https://instagram.com/yourusername" target="_blank" class="instagram-post">
+                    Post 4
+                </a>
+                <a href="https://instagram.com/yourusername" target="_blank" class="instagram-post">
+                    Post 5
+                </a>
+                <a href="https://instagram.com/yourusername" target="_blank" class="instagram-post">
+                    Post 6
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const logoContainer = document.getElementById('logoContainer');
+        const navBar = document.getElementById('navBar');
+
+        window.addEventListener('scroll', () => {
+            const logoHeight = logoContainer.offsetHeight;
+            const scrollPosition = window.scrollY;
+
+            // Start fading when user scrolls 70% down the logo section
+            if (scrollPosition > logoHeight * 0.7) {
+                logoContainer.classList.add('hidden');
+                navBar.classList.add('visible');
+            } else {
+                logoContainer.classList.remove('hidden');
+                navBar.classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+</html>
