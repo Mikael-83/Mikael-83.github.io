@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPF Catalog - Oculent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="catalog.css">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="desktop.css">
+</head>
+<body>
+    <!-- Hamburger Menu Toggle (Mobile) -->
+    <div class="nav-toggle" id="navToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Floating Cart Icon -->
+    <a href="cart.html" class="cart-icon" id="cartIcon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 2L7.17 5H2v2h1.5l1.77 9c.14.73.76 1.27 1.5 1.27h9.46c.74 0 1.36-.54 1.5-1.27l1.77-9H21V5h-5.17L14 2H9z"/>
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="16" cy="21" r="1"/>
+        </svg>
+        <span class="cart-badge" id="cart-badge">0</span>
+    </a>
+
+    <!-- Side Navigation -->
+    <nav class="side-nav" id="sideNav">
+        <div class="nav-content" id="navContent">
+            <div class="nav-logo">Oculent</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="catalog-main">
+        <!-- Header -->
+        <section class="catalog-header">
+            <div class="container">
+                <a href="index.html" class="back-link">← Back to Home</a>
+                <h1 class="catalog-title">Paint Protection Film</h1>
+                <p class="catalog-subtitle">Premium self-healing PPF technology for ultimate vehicle protection</p>
+            </div>
+        </section>
+
+        <!-- Products Grid -->
+        <section class="products-section">
+            <div class="container">
+                <div class="products-grid">
+
+                    <!-- Premium PPF Card -->
+                    <div class="product-card" data-product-id="premium-ppf">
+                        <div class="product-image-wrapper">
+                            <img src="blue.png" alt="Premium PPF" class="product-image" id="premium-ppf-image">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-header">
+                                <h3 class="product-name">Premium PPF</h3>
+                                <button class="info-icon" data-tooltip="Self-healing topcoat with crystal clear finish. 10-year warranty. Superior scratch resistance and stain protection. UV resistant and maintains gloss.">
+                                    <span>i</span>
+                                </button>
+                            </div>
+                            <p class="product-description">Self-healing topcoat, crystal clear finish</p>
+                            <p class="product-price">$899.99</p>
+
+                            <!-- Color Selection -->
+                            <div class="color-selection">
+                                <label>Color:</label>
+                                <div class="color-options">
+                                    <button class="color-btn active" data-color="blue" data-product="premium-ppf">
+                                        <span class="color-swatch" style="background: #5BA3F5;"></span>
+                                    </button>
+                                    <button class="color-btn" data-color="red" data-product="premium-ppf">
+                                        <span class="color-swatch" style="background: #E74C3C;"></span>
+                                    </button>
+                                    <button class="color-btn" data-color="yellow" data-product="premium-ppf">
+                                        <span class="color-swatch" style="background: #F1C40F;"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button class="btn-add-cart" data-product-id="premium-ppf">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Matte PPF Card -->
+                    <div class="product-card" data-product-id="matte-ppf">
+                        <div class="product-image-wrapper">
+                            <img src="blue.png" alt="Matte PPF" class="product-image" id="matte-ppf-image">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-header">
+                                <h3 class="product-name">Matte PPF</h3>
+                                <button class="info-icon" data-tooltip="Satin finish with full protection properties. Non-reflective matte surface. Self-healing technology. 8-year warranty. Perfect for modern vehicle aesthetics.">
+                                    <span>i</span>
+                                </button>
+                            </div>
+                            <p class="product-description">Satin finish with full protection</p>
+                            <p class="product-price">$849.99</p>
+
+                            <!-- Color Selection -->
+                            <div class="color-selection">
+                                <label>Color:</label>
+                                <div class="color-options">
+                                    <button class="color-btn active" data-color="blue" data-product="matte-ppf">
+                                        <span class="color-swatch" style="background: #5BA3F5;"></span>
+                                    </button>
+                                    <button class="color-btn" data-color="red" data-product="matte-ppf">
+                                        <span class="color-swatch" style="background: #E74C3C;"></span>
+                                    </button>
+                                    <button class="color-btn" data-color="yellow" data-product="matte-ppf">
+                                        <span class="color-swatch" style="background: #F1C40F;"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button class="btn-add-cart" data-product-id="matte-ppf">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Color PPF Card -->
+                    <div class="product-card" data-product-id="color-ppf">
+                        <div class="product-image-wrapper">
+                            <img src="blue.png" alt="Color PPF" class="product-image" id="color-ppf-image">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-header">
+                                <h3 class="product-name">Color PPF</h3>
+                                <button class="info-icon" data-tooltip="Protection meets customization. Available in vibrant colors. Self-healing properties. 7-year warranty. Change your vehicle's appearance while protecting the paint.">
+                                    <span>i</span>
+                                </button>
+                            </div>
+                            <p class="product-description">Protection meets customization</p>
+                            <p class="product-price">$949.99</p>
+
+                            <!-- Color Selection -->
+                            <div class="color-selection">
+                                <label>Color:</label>
+                                <div class="color-options">
+                                    <button class="color-btn active" data-color="blue" data-product="color-ppf">
+                                        <span class="color-swatch" style="background: #5BA3F5;"></span>
+                                    </button>
+                                    <button class="color-btn" data-color="red" data-product="color-ppf">
+                                        <span class="color-swatch" style="background: #E74C3C;"></span>
+                                    </button>
+                                    <button class="color-btn" data-color="yellow" data-product="color-ppf">
+                                        <span class="color-swatch" style="background: #F1C40F;"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button class="btn-add-cart" data-product-id="color-ppf">Add to Cart</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+
+    <script src="app.js"></script>
+    <script src="catalog.js"></script>
+</body>
+</html>
