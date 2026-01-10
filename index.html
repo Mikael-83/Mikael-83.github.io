@@ -3,55 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oculent - Wholesale Automotive Films & Coatings</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- CSS will be injected by JavaScript based on screen size -->
+    <title>Uzziel Leyva | 30th Celebration Menu</title>
+    <style>
+        :root {
+            --bg-color: #f9f9f7;
+            --text-color: #1a1a1a;
+            --accent-color: #8c7851; /* Subtle gold/bronze */
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .menu-container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out;
+        }
+
+        .menu-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        header {
+            margin-bottom: 80px;
+        }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-color);
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background-color: var(--accent-color);
+            margin: 40px auto;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        .course-title {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .dish-name {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            font-style: italic;
+        }
+
+        .dish-description {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            max-width: 80%;
+            margin: 0 auto;
+            opacity: 0.8;
+        }
+
+        footer {
+            margin-top: 100px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        /* Simple scroll reveal effect for sections */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.8s all ease-in-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Hamburger Menu Toggle (Mobile) -->
-    <div class="nav-toggle" id="navToggle">
-        <span></span>
-        <span></span>
-        <span></span>
+
+    <div class="menu-container" id="menu">
+        <header>
+            <h1>Uzziel Leyva</h1>
+            <p class="subtitle">The 30th Celebration</p>
+            <div class="divider"></div>
+        </header>
+
+        <section class="reveal">
+            <p class="course-title">Amuse-Bouche</p>
+            <div class="dish-name">Calabacita au Ratatouille</div>
+            <p class="dish-description">Squash, Pomme Sauce, Queso Mexicano, Cilantro</p>
+            <br>
+            <div class="dish-name">Chilaquiles Caseras</div>
+            <p class="dish-description">Home Made</p>
+        </section>
+
+        <section class="reveal">
+            <p class="course-title">Apéritif</p>
+            <div class="dish-name">Torta Sando</div>
+            <p class="dish-description">A Hispanic Twist on a Modern Japanese Sandwich</p>
+        </section>
+
+        <section class="reveal">
+            <p class="course-title">Entrée</p>
+            <div class="dish-name">Bavette d'Aloyau</div>
+            <p class="dish-description">Carne Asada</p>
+        </section>
+
+        <section class="reveal">
+            <p class="course-title">Dessert</p>
+            <div class="dish-name">Chantilly Berry Torte</div>
+        </section>
+
+        <footer>
+            &copy; 2024 &mdash; Private Dining Experience
+        </footer>
     </div>
 
-    <!-- Floating Cart Icon -->
-    <a href="cart.html" class="cart-icon" id="cartIcon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 2L7.17 5H2v2h1.5l1.77 9c.14.73.76 1.27 1.5 1.27h9.46c.74 0 1.36-.54 1.5-1.27l1.77-9H21V5h-5.17L14 2H9z"/>
-            <circle cx="9" cy="21" r="1"/>
-            <circle cx="16" cy="21" r="1"/>
-        </svg>
-        <span class="cart-badge" id="cart-badge">0</span>
-    </a>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initial fade in for the whole container
+            const menu = document.getElementById('menu');
+            menu.classList.add('visible');
 
-    <!-- Side Navigation -->
-    <nav class="side-nav" id="sideNav">
-        <div class="nav-content" id="navContent">
-            <div class="nav-logo">Oculent</div>
-            <ul class="nav-links">
-                <li><a href="#products" data-section="products">Products</a></li>
-                <li><a href="#window-tinting" data-section="window-tinting">Window Tinting</a></li>
-                <li><a href="#paint-protection" data-section="paint-protection">Paint Protection</a></li>
-                <li><a href="#wraps" data-section="wraps">Vinyl Wraps</a></li>
-                <li><a href="#coatings" data-section="coatings">Ceramic Coatings</a></li>
-                <li><a href="#tools" data-section="tools">Installation Tools</a></li>
-                <li><a href="#wholesale" data-section="wholesale">Wholesale</a></li>
-                <li><a href="#contact" data-section="contact">Contact</a></li>
-            </ul>
-            <div class="nav-footer">
-                <button class="btn-nav-primary">SIGN IN</button>
-                <button class="btn-nav-secondary">REGISTER</button>
-            </div>
-        </div>
-    </nav>
+            // Scroll reveal logic
+            const reveals = document.querySelectorAll(".reveal");
+            
+            const revealOnScroll = () => {
+                reveals.forEach(el => {
+                    const windowHeight = window.innerHeight;
+                    const elementTop = el.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < windowHeight - elementVisible) {
+                        el.classList.add("active");
+                    }
+                });
+            };
 
-    <!-- Hero Section (Fixed Background) -->
-    <section class="hero-section" id="heroSection">
-        <div class="hero-background">
-            <div class="hero-gradient"></div>
+            window.addEventListener("scroll", revealOnScroll);
+            // Trigger once on load
+            revealOnScroll();
+        });
+    </script>
+</body>
+</html>
             <div class="hero-pattern"></div>
         </div>
         <div class="hero-content">
